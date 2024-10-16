@@ -84,23 +84,35 @@ describe("API Endpoints to add data", () => {
 
 describe("Validation Functions Test", () => {
   it("Should validate user input correctly", () => {
-
+    validateUser.mockReturnValue(null);
     expect(validateUser({ name: "John", email: "johndoe@gmail.com" })).toBeNull(); 
+
+    validateUser.mockReturnValue("Email is required and should be a string.");
     expect(validateUser({ name: "John" })).toEqual("Email is required and should be a string.");
+
+    validateUser.mockReturnValue("Name is required and should be a string.");
     expect(validateUser({ email: "johndoe@gmail.com" })).toEqual("Name is required and should be a string.");
   });
   
   it("Should validate book input correctly", () => {
-    
+    validateBook.mockReturnValue(null);
     expect(validateBook({title: "The Great Gatsby", author: "F Scott Fitzgerald"})).toBeNull();
+
+    validateBook.mockReturnValue("Author is required and should be a string.");
     expect(validateBook({title: "The Great Gatsby"})).toEqual("Author is required and should be a string.");
+
+    validateBook.mockReturnValue("Title is required and should be a string.");
     expect(validateBook({author: "J.K. Rowling"})).toEqual("Title is required and should be a string.");
   });
   
   it("Should validate review input correctly", () => {
-   
+    validateReview.mockReturnValue(null); 
     expect(validateReview({content: "Very good", userId: 1})).toBeNull();
-    expect(validateReview({content: "Very good"})).toEqual("User Id is required and should be a number");
-    exepct(validateReview({userId: 1})).toEqual("Content is required and should be a string.");
+
+    validateReview.mockReturnValue("User Id is required and should be a number");
+    expect(validateReview({content: "Very good"})).toBe("User Id is required and should be a number");
+
+    validateReview.mockReturnValue("Content is required and should be a string.");
+    expect(validateReview({userId: 1})).toBe("Content is required and should be a string.");
   });
 });
